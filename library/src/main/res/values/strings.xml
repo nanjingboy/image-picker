@@ -4,4 +4,5 @@
   <string name="cancel">Cancel</string>
   <string name="all">All Photos</string>
   <string name="choose">Choose</string>
+  <string name="choose_warn">Please select 1 photo at least</string>
 </resources>

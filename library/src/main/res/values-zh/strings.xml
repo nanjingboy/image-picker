@@ -4,4 +4,5 @@
   <string name="cancel">取消</string>
   <string name="all">所有照片</string>
   <string name="choose">选择</string>
+  <string name="choose_warn">请至少选择一张照片</string>
 </resources>

@@ -4,7 +4,9 @@ import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.support.v4.content.Loader;
+import android.view.Gravity;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.jakewharton.rxbinding.view.RxView;
 
@@ -30,6 +32,10 @@ public class MultipleImagePickerActivity extends ImagePickerActivity {
                 intent.putCharSequenceArrayListExtra("images", mSelectedImages);
                 setResult(Activity.RESULT_OK, intent);
                 finish();
+            } else {
+                Toast toast = Toast.makeText(this, R.string.choose_warn, Toast.LENGTH_SHORT);
+                toast.setGravity(Gravity.CENTER, 0, 0);
+                toast.show();
             }
         });
     }
