@@ -37,7 +37,7 @@
         android:paddingBottom="?android:attr/actionBarSize"
         android:clipToPadding="false"
         android:numColumns="auto_fit"
-        android:columnWidth="120dp"
+        android:columnWidth="100dp"
         android:listSelector="@null"/>
 
 </LinearLayout>
