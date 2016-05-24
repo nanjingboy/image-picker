@@ -2,5 +2,5 @@
 <resources>
   <string name="photos">Photos</string>
   <string name="cancel">Cancel</string>
-  <string name="all">All</string>
+  <string name="all">All Photos</string>
 </resources>
