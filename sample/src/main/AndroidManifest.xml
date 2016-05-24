@@ -19,6 +19,8 @@
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
         <activity android:name="me.tom.image.picker.activity.ImagePickerActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+        <activity android:name="me.tom.image.picker.activity.MultipleImagePickerActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
     </application>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
 </manifest>

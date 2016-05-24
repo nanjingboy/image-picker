@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.ViewTreeObserver;
 import android.widget.GridView;
+import android.widget.RadioButton;
 
 import com.jakewharton.rxbinding.view.RxView;
 
@@ -27,6 +28,8 @@ public class MainActivity extends AppCompatActivity {
 
         RxView.clicks(findViewById(R.id.tryNow)).subscribe(aVoid -> {
             Intent intent = new Intent(this, FolderPickerActivity.class);
+            RadioButton multiple = (RadioButton) findViewById(R.id.multiple);
+            intent.putExtra("multiple", multiple.isChecked());
             startActivityForResult(intent, FolderPickerActivity.REQUEST_IMAGE_PICKER);
         });
 

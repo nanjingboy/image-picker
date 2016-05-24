@@ -26,8 +26,9 @@ import me.tom.image.picker.model.Image;
 
 public class ImagePickerActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
 
-    private String mFolderName;
-    private ImagePickerAdapter mImagePickerAdapter;
+    protected String mFolderName;
+    protected ImagePickerAdapter mImagePickerAdapter;
+    protected GridView mGridView;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -44,8 +45,8 @@ public class ImagePickerActivity extends AppCompatActivity implements LoaderMana
                 });
     }
 
-    private void initialize() {
-        setContentView(R.layout.activity_image_picker);
+    protected void initialize() {
+        setContentView(getContentView());
 
         RxView.clicks(findViewById(R.id.goBack)).subscribe(aVoid -> finish());
         RxView.clicks(findViewById(R.id.cancel)).subscribe(aVoid -> finish());
@@ -54,26 +55,27 @@ public class ImagePickerActivity extends AppCompatActivity implements LoaderMana
         TextView name = (TextView) findViewById(R.id.name);
         name.setText(mFolderName);
 
-        mImagePickerAdapter = new ImagePickerAdapter(this);
-        GridView gridView = (GridView) findViewById(R.id.gridView);
-        gridView.setAdapter(mImagePickerAdapter);
-        gridView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+        setImagePickerAdapter();
+
+        mGridView = (GridView) findViewById(R.id.gridView);
+        mGridView.setAdapter(mImagePickerAdapter);
+        mGridView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
                 if (mImagePickerAdapter.getNumColumns() == 0) {
                     int imageSize = getResources().getDimensionPixelSize(R.dimen.image_size);
                     int imageSpace = getResources().getDimensionPixelOffset(R.dimen.image_space);
-                    int numColumns = (int) Math.floor(gridView.getWidth() / (imageSize + imageSpace));
+                    int numColumns = (int) Math.floor(mGridView.getWidth() / (imageSize + imageSpace));
                     if (numColumns > 0) {
-                        int columnWidth = (gridView.getWidth() / numColumns) - imageSpace;
+                        int columnWidth = (mGridView.getWidth() / numColumns) - imageSpace;
                         mImagePickerAdapter.setNumColumns(numColumns);
                         mImagePickerAdapter.setItemSize(columnWidth);
                     }
                 }
-                gridView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                mGridView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
             }
         });
-        gridView.setOnItemClickListener((parent, view, position, id) -> {
+        mGridView.setOnItemClickListener((parent, view, position, id) -> {
             Image image = (Image) mImagePickerAdapter.getItem(position);
             ArrayList<CharSequence> images = new ArrayList<>();
             images.add(image.path);
@@ -84,6 +86,14 @@ public class ImagePickerActivity extends AppCompatActivity implements LoaderMana
         });
 
         getSupportLoaderManager().restartLoader(0, null, this);
+    }
+
+    protected int getContentView() {
+        return R.layout.activity_image_picker;
+    }
+
+    protected void setImagePickerAdapter() {
+        mImagePickerAdapter = new ImagePickerAdapter(this);
     }
 
     @Override

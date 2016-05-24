@@ -17,14 +17,14 @@ import me.tom.image.picker.model.Image;
 
 public class ImagePickerAdapter extends BaseAdapter {
 
-    private Context mContext;
-    private LayoutInflater mInflater;
-    private ArrayList<Image> mImages;
+    protected Context mContext;
+    protected LayoutInflater mInflater;
+    protected ArrayList<Image> mImages;
 
-    private int mItemSize = 0;
-    private int mNumColumns = 0;
+    protected int mItemSize = 0;
+    protected int mNumColumns = 0;
 
-    private RelativeLayout.LayoutParams mItemLayoutParams;
+    protected RelativeLayout.LayoutParams mItemLayoutParams;
 
     public ImagePickerAdapter(Context context) {
         mContext = context;
@@ -80,7 +80,7 @@ public class ImagePickerAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         if (convertView == null) {
-            convertView = mInflater.inflate(R.layout.image_picker_list_item, parent, false);
+            convertView = getView(position, parent);
         }
 
         if (mItemSize > 0) {
@@ -91,5 +91,9 @@ public class ImagePickerAdapter extends BaseAdapter {
             }
         }
         return convertView;
+    }
+
+    public View getView(int position, ViewGroup parent) {
+       return mInflater.inflate(R.layout.image_picker_list_item, parent, false);
     }
 }

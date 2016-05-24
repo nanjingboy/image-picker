@@ -53,7 +53,12 @@ public class FolderPickerActivity extends AppCompatActivity implements LoaderMan
         listView.setAdapter(mFolderPickerAdapter);
         listView.setOnItemClickListener((parent, view, position, id) -> {
             Folder folder = (Folder) mFolderPickerAdapter.getItem(position);
-            Intent intent = new Intent(this, ImagePickerActivity.class);
+            Intent intent = null;
+            if (getIntent().getBooleanExtra("multiple", false)) {
+                intent = new Intent(this, MultipleImagePickerActivity.class);
+            } else {
+                intent = new Intent(this, ImagePickerActivity.class);
+            }
             intent.putExtra("folderName", folder.name);
             startActivityForResult(intent, REQUEST_IMAGE_PICKER);
         });
