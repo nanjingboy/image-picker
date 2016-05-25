@@ -35,7 +35,7 @@ public class ImagePickerActivity extends AppCompatActivity implements LoaderMana
         super.onCreate(savedInstanceState);
 
         RxPermissions.getInstance(this)
-                .request(Manifest.permission.READ_EXTERNAL_STORAGE)
+                .request(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 .subscribe(granted -> {
                     if (granted) {
                         initialize();
