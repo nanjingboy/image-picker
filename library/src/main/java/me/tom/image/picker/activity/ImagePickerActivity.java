@@ -124,7 +124,7 @@ public class ImagePickerActivity extends AppCompatActivity implements LoaderMana
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-        if (data == null && data.getCount() <= 0) {
+        if (data == null || data.getCount() <= 0) {
             return;
         }
         data.moveToFirst();

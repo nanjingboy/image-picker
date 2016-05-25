@@ -94,7 +94,7 @@ public class FolderPickerActivity extends AppCompatActivity implements LoaderMan
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-        if (data == null && data.getCount() <= 0) {
+        if (data == null || data.getCount() <= 0) {
             return;
         }
 
