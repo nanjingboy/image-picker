@@ -55,7 +55,7 @@ public class FolderPickerAdapter extends BaseAdapter {
 
         Folder folder = mFolders.get(position);
         ImageView cover = (ImageView) convertView.findViewById(R.id.cover);
-        Glide.with(mContext).load(folder.cover).into(cover);
+        Glide.with(mContext).load(folder.cover).placeholder(R.drawable.loading).into(cover);
         TextView name = (TextView) convertView.findViewById(R.id.name);
         name.setText(folder.name);
         TextView count = (TextView) convertView.findViewById(R.id.count);

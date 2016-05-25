@@ -85,7 +85,10 @@ public class ImagePickerAdapter extends BaseAdapter {
 
         if (mItemSize > 0) {
             ImageView imageView = (ImageView) convertView.findViewById(R.id.image);
-            Glide.with(mContext).load(mImages.get(position).path).override(mItemSize, mItemSize).into(imageView);
+            Glide.with(mContext).load(mImages.get(position).path)
+                    .placeholder(R.drawable.loading)
+                    .override(mItemSize, mItemSize)
+                    .into(imageView);
             if (imageView.getLayoutParams().height != mItemSize) {
                 imageView.setLayoutParams(mItemLayoutParams);
             }
