@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import me.tom.image.picker.activity.FolderPickerActivity;
 import me.tom.image.picker.adapter.ImagePickerAdapter;
 import me.tom.image.picker.model.Image;
+import rx.functions.Action1;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -26,15 +27,18 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        RxView.clicks(findViewById(R.id.tryNow)).subscribe(aVoid -> {
-            Intent intent = new Intent(this, FolderPickerActivity.class);
-            RadioButton multiple = (RadioButton) findViewById(R.id.multiple);
-            intent.putExtra("multiple", multiple.isChecked());
-            startActivityForResult(intent, FolderPickerActivity.REQUEST_IMAGE_PICKER);
+        RxView.clicks(findViewById(R.id.tryNow)).subscribe(new Action1<Void>() {
+            @Override
+            public void call(Void aVoid) {
+                Intent intent = new Intent(MainActivity.this, FolderPickerActivity.class);
+                RadioButton multiple = (RadioButton) findViewById(R.id.multiple);
+                intent.putExtra("multiple", multiple.isChecked());
+                startActivityForResult(intent, FolderPickerActivity.REQUEST_IMAGE_PICKER);
+            }
         });
 
         mImagePickerAdapter = new ImagePickerAdapter(this);
-        GridView gridView = (GridView) findViewById(R.id.gridView);
+        final GridView gridView = (GridView) findViewById(R.id.gridView);
         gridView.setAdapter(mImagePickerAdapter);
         gridView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
