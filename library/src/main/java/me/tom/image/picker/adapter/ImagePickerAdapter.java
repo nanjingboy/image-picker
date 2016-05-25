@@ -80,7 +80,7 @@ public class ImagePickerAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         if (convertView == null) {
-            convertView = getView(position, parent);
+            convertView = getView(parent);
         }
 
         if (mItemSize > 0) {
@@ -93,7 +93,7 @@ public class ImagePickerAdapter extends BaseAdapter {
         return convertView;
     }
 
-    public View getView(int position, ViewGroup parent) {
+    public View getView(ViewGroup parent) {
        return mInflater.inflate(R.layout.image_picker_list_item, parent, false);
     }
 }

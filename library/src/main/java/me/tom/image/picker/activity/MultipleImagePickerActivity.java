@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.support.v4.content.Loader;
 import android.view.Gravity;
+import android.widget.CheckBox;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -14,6 +15,7 @@ import java.util.ArrayList;
 
 import me.tom.image.picker.R;
 import me.tom.image.picker.adapter.MultipleImagePickerAdapter;
+import me.tom.image.picker.model.Image;
 
 public class MultipleImagePickerActivity extends ImagePickerActivity {
 
@@ -23,7 +25,22 @@ public class MultipleImagePickerActivity extends ImagePickerActivity {
     @Override
     protected void initialize() {
         super.initialize();
-        mGridView.setOnItemClickListener(null);
+
+        mSelectedImages = new ArrayList<>();
+        mGridView.setOnItemClickListener((parent, view, position, id) -> {
+            Image image = (Image) mImagePickerAdapter.getItem(position);
+            CheckBox checkBox = (CheckBox) view.findViewById(R.id.check);
+            if (checkBox.isChecked()) {
+                checkBox.setChecked(false);
+                if (mSelectedImages.contains(image.path)) {
+                    mSelectedImages.remove(image.path);
+                }
+            } else {
+                checkBox.setChecked(true);
+                mSelectedImages.add(image.path);
+            }
+            mChosenCountView.setText(mSelectedImages.size() + "/" + mImagePickerAdapter.getCount());
+        });
 
         mChosenCountView = (TextView) findViewById(R.id.chosenCount);
         RxView.clicks(findViewById(R.id.choose)).subscribe(aVoid -> {
@@ -48,14 +65,7 @@ public class MultipleImagePickerActivity extends ImagePickerActivity {
     @Override
     protected void setImagePickerAdapter() {
         mSelectedImages = new ArrayList<>();
-        mImagePickerAdapter = new MultipleImagePickerAdapter(this, ((isChecked, image) -> {
-            if (isChecked) {
-                mSelectedImages.add(image.path);
-            } else if (mSelectedImages.contains(image.path)) {
-                mSelectedImages.remove(image.path);
-            }
-            mChosenCountView.setText(mSelectedImages.size() + "/" + mImagePickerAdapter.getCount());
-        }));
+        mImagePickerAdapter = new MultipleImagePickerAdapter(this);
     }
 
     @Override

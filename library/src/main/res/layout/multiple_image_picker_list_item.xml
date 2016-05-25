@@ -6,8 +6,7 @@
         android:id="@+id/image"
         android:scaleType="centerCrop"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:src="@drawable/chevron_right"/>
+        android:layout_height="match_parent"/>
 
     <CheckBox
         android:id="@+id/check"
@@ -15,5 +14,8 @@
         android:layout_height="25dp"
         android:layout_alignParentRight="true"
         android:background="@drawable/checkbox"
-        android:button="@null"/>
+        android:button="@null"
+        android:clickable="false"
+        android:focusable="false"
+        android:focusableInTouchMode="false"/>
 </RelativeLayout>
