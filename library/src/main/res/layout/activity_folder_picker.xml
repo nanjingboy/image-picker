@@ -1,40 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/white">
 
-    <android.support.v7.widget.Toolbar
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="@color/colorPrimary"
-        app:contentInsetLeft="0dp"
-        app:contentInsetStart="0dp">
-        <RelativeLayout
-            android:layout_width="match_parent"
+        android:paddingRight="16dp"
+        android:background="@color/colorPrimary">
+        <TextView
+            android:gravity="center"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:paddingRight="16dp">
-            <TextView
-                android:gravity="center"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_centerInParent="true"
-                android:textColor="@android:color/white"
-                android:textSize="16sp"
-                android:text="@string/photos"/>
-            <TextView
-                android:id="@+id/cancel"
-                android:gravity="center"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_alignParentRight="true"
-                android:textColor="@android:color/white"
-                android:textSize="14sp"
-                android:text="@string/cancel" />
-        </RelativeLayout>
-    </android.support.v7.widget.Toolbar>
+            android:layout_centerInParent="true"
+            android:textColor="@android:color/white"
+            android:textSize="16sp"
+            android:text="@string/photos"/>
+        <TextView
+            android:id="@+id/cancel"
+            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:textColor="@android:color/white"
+            android:textSize="14sp"
+            android:text="@string/cancel" />
+    </RelativeLayout>
 
     <ListView
         android:id="@+id/listView"
