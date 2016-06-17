@@ -3,13 +3,13 @@
     <RelativeLayout
         android:id="@+id/header"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="@dimen/header_view_height"
         android:background="@color/colorPrimary"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp">
+        android:paddingLeft="@dimen/header_view_padding"
+        android:paddingRight="@dimen/header_view_padding">
         <ImageView
             android:id="@+id/goBack"
-            android:layout_width="16dp"
+            android:layout_width="@dimen/header_view_go_back_width"
             android:layout_height="match_parent"
             android:src="@drawable/chevron_left"/>
         <TextView
@@ -19,7 +19,7 @@
             android:layout_height="match_parent"
             android:layout_centerInParent="true"
             android:textColor="@android:color/white"
-            android:textSize="16sp"/>
+            android:textSize="@dimen/header_view_title_text_size"/>
         <TextView
             android:id="@+id/cancel"
             android:gravity="center"
@@ -27,7 +27,7 @@
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"
             android:textColor="@android:color/white"
-            android:textSize="14sp"
+            android:textSize="@dimen/header_view_right_text_size"
             android:text="@string/cancel" />
     </RelativeLayout>
 

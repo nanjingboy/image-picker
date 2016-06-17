@@ -9,10 +9,10 @@
     <RelativeLayout
         android:id="@+id/multiPanel"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="@dimen/multi_selected_panel_height"
         android:background="@color/colorPrimary"
         android:layout_alignParentBottom="true"
-        android:paddingRight="16dp">
+        android:paddingRight="@dimen/multi_selected_panel_padding_right">
         <TextView
             android:id="@+id/chosenCount"
             android:gravity="center"
@@ -20,7 +20,7 @@
             android:layout_height="match_parent"
             android:layout_centerInParent="true"
             android:textColor="@android:color/white"
-            android:textSize="12sp"/>
+            android:textSize="@dimen/multi_selected_panel_count_text_size"/>
         <TextView
             android:id="@+id/choose"
             android:gravity="center"
@@ -28,7 +28,7 @@
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"
             android:textColor="@android:color/white"
-            android:textSize="14sp"
+            android:textSize="@dimen/multi_selected_panel_choose_text_size"
             android:text="@string/choose"/>
     </RelativeLayout>
 </RelativeLayout>
