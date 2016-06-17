@@ -1,6 +1,12 @@
 # image-picker
 Android image picker library.
 
+# Screenshots
+
+![image-picker folders](screenshots/folders.png)
+![image-picker single](screenshots/single.png)
+![image-picker multiple](screenshots/multiple.png)
+
 # Setup
 
 * In your `build.gradle` :
@@ -11,7 +17,7 @@ repositories {
 }
 
 dependencies {
-    compile 'com.github.nanjingboy:image-picker:1.0'
+    compile 'com.github.nanjingboy:image-picker:1.1'
 }
 ```
 
