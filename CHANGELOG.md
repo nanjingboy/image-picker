@@ -1,3 +1,6 @@
+## 1.3 2016-06-17
+* `All Photos` folder cover show newest photo
+
 ## 1.1 2016-06-17
 * Remove useless layout objects
 * Move values for layout attributes to dimens resource file

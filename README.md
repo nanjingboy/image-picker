@@ -17,7 +17,7 @@ repositories {
 }
 
 dependencies {
-    compile 'com.github.nanjingboy:image-picker:1.1'
+    compile 'com.github.nanjingboy:image-picker:1.3'
 }
 ```
 
