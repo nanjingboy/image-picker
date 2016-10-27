@@ -99,36 +99,34 @@ public class FolderPickerActivity extends AppCompatActivity implements LoaderMan
         }
 
         data.moveToFirst();
-        HashMap<String, ArrayList<String>> imageSet = new HashMap<>();
+        Folder defaultFolder = new Folder();
+        defaultFolder.name = getString(R.string.all);
+        defaultFolder.imageCount = data.getCount();
+        HashMap<String, ArrayList<String>> imageBuckets = new HashMap<>();
         int pathColumnIndex = data.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
         int bucketColumnIndex = data.getColumnIndexOrThrow(MediaStore.Images.Media.BUCKET_DISPLAY_NAME);
         do {
             String path = data.getString(pathColumnIndex);
-            String bucket = data.getString(bucketColumnIndex);
-            if (!imageSet.containsKey(bucket)) {
-                imageSet.put(bucket, new ArrayList<>());
+            if (defaultFolder.cover == null) {
+                defaultFolder.cover = path;
             }
-            imageSet.get(bucket).add(path);
+            String bucket = data.getString(bucketColumnIndex);
+            if (!imageBuckets.containsKey(bucket)) {
+                imageBuckets.put(bucket, new ArrayList<>());
+            }
+            imageBuckets.get(bucket).add(path);
         } while (data.moveToNext());
 
         ArrayList<Folder> folders = new ArrayList<>();
-        Folder defaultFolder = new Folder();
-        defaultFolder.name = getString(R.string.all);
-        defaultFolder.imageCount = 0;
-
-        for (String key: imageSet.keySet()) {
-            ArrayList<String> images = imageSet.get(key);
+        folders.add(defaultFolder);
+        for (String key: imageBuckets.keySet()) {
+            ArrayList<String> images = imageBuckets.get(key);
             Folder folder = new Folder();
             folder.name = key;
             folder.cover = images.get(0);
             folder.imageCount = images.size();
             folders.add(folder);
-            defaultFolder.imageCount += folder.imageCount;
-            if (defaultFolder.cover == null) {
-                defaultFolder.cover = folder.cover;
-            }
         }
-        folders.add(0, defaultFolder);
         mFolderPickerAdapter.setFolders(folders);
     }
 }
