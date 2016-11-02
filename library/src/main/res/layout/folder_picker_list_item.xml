@@ -5,20 +5,20 @@
     android:background="@drawable/folder_picker_list_item">
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/list_view_item_height"
-        android:paddingLeft="@dimen/list_view_item_padding_left"
-        android:paddingRight="@dimen/list_view_item_padding_right"
-        android:paddingTop="@dimen/list_view_item_padding_top"
-        android:paddingBottom="@dimen/list_view_item_padding_bottom">
+        android:layout_height="@dimen/image_picker_list_view_item_height"
+        android:paddingLeft="@dimen/image_picker_list_view_item_padding_left"
+        android:paddingRight="@dimen/image_picker_list_view_item_padding_right"
+        android:paddingTop="@dimen/image_picker_list_view_item_padding_top"
+        android:paddingBottom="@dimen/image_picker_list_view_item_padding_bottom">
         <ImageView
             android:id="@+id/cover"
             android:scaleType="centerCrop"
-            android:layout_width="@dimen/list_view_item_image_size"
-            android:layout_height="@dimen/list_view_item_image_size" />
+            android:layout_width="@dimen/image_picker_list_view_item_image_size"
+            android:layout_height="@dimen/image_picker_list_view_item_image_size" />
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_marginLeft="@dimen/list_view_item_folder_margin_left"
+            android:layout_marginLeft="@dimen/image_picker_list_view_item_folder_margin_left"
             android:layout_toRightOf="@+id/cover"
             android:orientation="vertical"
             android:gravity="center_vertical">
@@ -27,17 +27,17 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@android:color/black"
-                android:textSize="@dimen/list_view_item_folder_name_text_size"/>
+                android:textSize="@dimen/image_picker_list_view_item_folder_name_text_size"/>
             <TextView
                 android:id="@+id/count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@android:color/black"
-                android:textSize="@dimen/list_view_item_folder_count_text_size"/>
+                android:textSize="@dimen/image_picker_list_view_item_folder_count_text_size"/>
         </LinearLayout>
         <ImageView
-            android:layout_width="@dimen/list_view_item_chevron_size"
-            android:layout_height="@dimen/list_view_item_chevron_size"
+            android:layout_width="@dimen/image_picker_list_view_item_chevron_size"
+            android:layout_height="@dimen/image_picker_list_view_item_chevron_size"
             android:layout_alignParentRight="true"
             android:layout_centerInParent="true"
             android:src="@drawable/chevron_right"/>

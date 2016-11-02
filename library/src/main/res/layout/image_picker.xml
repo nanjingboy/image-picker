@@ -3,13 +3,13 @@
     <RelativeLayout
         android:id="@+id/header"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/header_view_height"
+        android:layout_height="@dimen/image_picker_header_view_height"
         android:background="@color/colorPrimary"
-        android:paddingLeft="@dimen/header_view_padding"
-        android:paddingRight="@dimen/header_view_padding">
+        android:paddingLeft="@dimen/image_picker_header_view_padding"
+        android:paddingRight="@dimen/image_picker_header_view_padding">
         <ImageView
             android:id="@+id/goBack"
-            android:layout_width="@dimen/header_view_go_back_width"
+            android:layout_width="@dimen/image_picker_header_view_go_back_width"
             android:layout_height="match_parent"
             android:src="@drawable/chevron_left"/>
         <TextView
@@ -19,7 +19,7 @@
             android:layout_height="match_parent"
             android:layout_centerInParent="true"
             android:textColor="@android:color/white"
-            android:textSize="@dimen/header_view_title_text_size"/>
+            android:textSize="@dimen/image_picker_header_view_title_text_size"/>
         <TextView
             android:id="@+id/cancel"
             android:gravity="center"
@@ -27,7 +27,7 @@
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"
             android:textColor="@android:color/white"
-            android:textSize="@dimen/header_view_right_text_size"
+            android:textSize="@dimen/image_picker_header_view_right_text_size"
             android:text="@string/cancel" />
     </RelativeLayout>
 
@@ -36,12 +36,12 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/header"
-        android:layout_marginTop="@dimen/image_space"
-        android:horizontalSpacing="@dimen/image_space"
-        android:verticalSpacing="@dimen/image_space"
+        android:layout_marginTop="@dimen/image_picker_image_space"
+        android:horizontalSpacing="@dimen/image_picker_image_space"
+        android:verticalSpacing="@dimen/image_picker_image_space"
         android:paddingBottom="?android:attr/actionBarSize"
         android:clipToPadding="false"
         android:numColumns="auto_fit"
-        android:columnWidth="@dimen/image_size"
+        android:columnWidth="@dimen/image_picker_image_size"
         android:listSelector="@null"/>
 </merge>

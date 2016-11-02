@@ -44,8 +44,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onGlobalLayout() {
                 if (mImagePickerAdapter.getNumColumns() == 0) {
-                    int imageSize = getResources().getDimensionPixelSize(me.tom.image.picker.R.dimen.image_size);
-                    int imageSpace = getResources().getDimensionPixelOffset(me.tom.image.picker.R.dimen.image_space);
+                    int imageSize = getResources().getDimensionPixelSize(me.tom.image.picker.R.dimen.image_picker_image_size);
+                    int imageSpace = getResources().getDimensionPixelOffset(me.tom.image.picker.R.dimen.image_picker_image_space);
                     int numColumns = (int) Math.floor(gridView.getWidth() / (imageSize + imageSpace));
                     if (numColumns > 0) {
                         int columnWidth = (gridView.getWidth() / numColumns) - imageSpace;

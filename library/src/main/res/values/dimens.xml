@@ -1,31 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="image_size">100dp</dimen>
-    <dimen name="image_space">2dp</dimen>
+    <dimen name="image_picker_image_size">100dp</dimen>
+    <dimen name="image_picker_image_space">2dp</dimen>
 
-    <dimen name="header_view_height">44dp</dimen>
-    <dimen name="header_view_padding">16dp</dimen>
-    <dimen name="header_view_go_back_width">16dp</dimen>
-    <dimen name="header_view_title_text_size">16sp</dimen>
-    <dimen name="header_view_right_text_size">14sp</dimen>
+    <dimen name="image_picker_header_view_height">44dp</dimen>
+    <dimen name="image_picker_header_view_padding">16dp</dimen>
+    <dimen name="image_picker_header_view_go_back_width">16dp</dimen>
+    <dimen name="image_picker_header_view_title_text_size">16sp</dimen>
+    <dimen name="image_picker_header_view_right_text_size">14sp</dimen>
 
-    <dimen name="check_box_size">25dp</dimen>
+    <dimen name="image_picker_check_box_size">25dp</dimen>
 
-    <dimen name="multi_selected_panel_height">40dp</dimen>
-    <dimen name="multi_selected_panel_padding_right">16dp</dimen>
-    <dimen name="multi_selected_panel_count_text_size">12sp</dimen>
-    <dimen name="multi_selected_panel_choose_text_size">14sp</dimen>
+    <dimen name="image_picker_multi_selected_panel_height">40dp</dimen>
+    <dimen name="image_picker_multi_selected_panel_padding_right">16dp</dimen>
+    <dimen name="image_picker_multi_selected_panel_count_text_size">12sp</dimen>
+    <dimen name="image_picker_multi_selected_panel_choose_text_size">14sp</dimen>
 
 
-    <dimen name="list_view_divider_height">1dp</dimen>
-    <dimen name="list_view_item_height">60dp</dimen>
-    <dimen name="list_view_item_padding_left">10dp</dimen>
-    <dimen name="list_view_item_padding_right">10dp</dimen>
-    <dimen name="list_view_item_padding_top">5dp</dimen>
-    <dimen name="list_view_item_padding_bottom">5dp</dimen>
-    <dimen name="list_view_item_image_size">50dp</dimen>
-    <dimen name="list_view_item_chevron_size">14dp</dimen>
-    <dimen name="list_view_item_folder_margin_left">15dp</dimen>
-    <dimen name="list_view_item_folder_name_text_size">14sp</dimen>
-    <dimen name="list_view_item_folder_count_text_size">12sp</dimen>
+    <dimen name="image_picker_list_view_divider_height">1dp</dimen>
+    <dimen name="image_picker_list_view_item_height">60dp</dimen>
+    <dimen name="image_picker_list_view_item_padding_left">10dp</dimen>
+    <dimen name="image_picker_list_view_item_padding_right">10dp</dimen>
+    <dimen name="image_picker_list_view_item_padding_top">5dp</dimen>
+    <dimen name="image_picker_list_view_item_padding_bottom">5dp</dimen>
+    <dimen name="image_picker_list_view_item_image_size">50dp</dimen>
+    <dimen name="image_picker_list_view_item_chevron_size">14dp</dimen>
+    <dimen name="image_picker_list_view_item_folder_margin_left">15dp</dimen>
+    <dimen name="image_picker_list_view_item_folder_name_text_size">14sp</dimen>
+    <dimen name="image_picker_list_view_item_folder_count_text_size">12sp</dimen>
 </resources>

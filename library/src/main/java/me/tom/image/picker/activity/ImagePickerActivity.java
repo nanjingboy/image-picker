@@ -63,8 +63,8 @@ public class ImagePickerActivity extends AppCompatActivity implements LoaderMana
             @Override
             public void onGlobalLayout() {
                 if (mImagePickerAdapter.getNumColumns() == 0) {
-                    int imageSize = getResources().getDimensionPixelSize(R.dimen.image_size);
-                    int imageSpace = getResources().getDimensionPixelOffset(R.dimen.image_space);
+                    int imageSize = getResources().getDimensionPixelSize(R.dimen.image_picker_image_size);
+                    int imageSpace = getResources().getDimensionPixelOffset(R.dimen.image_picker_image_space);
                     int numColumns = (int) Math.floor(mGridView.getWidth() / (imageSize + imageSpace));
                     if (numColumns > 0) {
                         int columnWidth = (mGridView.getWidth() / numColumns) - imageSpace;
