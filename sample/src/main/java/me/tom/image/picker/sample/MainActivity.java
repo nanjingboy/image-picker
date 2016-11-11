@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.view.ViewTreeObserver;
+import android.widget.GridView;
 import android.widget.RadioButton;
 
 import com.jakewharton.rxbinding.view.RxView;
@@ -12,13 +14,13 @@ import com.jakewharton.rxbinding.view.RxView;
 import java.util.ArrayList;
 
 import me.tom.image.picker.activity.FolderPickerActivity;
+import me.tom.image.picker.adapter.ImagePickerAdapter;
 import me.tom.image.picker.model.Image;
-import me.tom.image.picker.widgets.ImageGroupView;
 import rx.functions.Action1;
 
 public class MainActivity extends AppCompatActivity {
 
-    private ImageGroupView mImageGroupView;
+    private ImagePickerAdapter mImagePickerAdapter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -34,7 +36,26 @@ public class MainActivity extends AppCompatActivity {
                 startActivityForResult(intent, FolderPickerActivity.REQUEST_IMAGE_PICKER);
             }
         });
-        mImageGroupView = (ImageGroupView) findViewById(R.id.imageGroupView);
+
+        mImagePickerAdapter = new ImagePickerAdapter(this);
+        final GridView gridView = (GridView) findViewById(R.id.gridView);
+        gridView.setAdapter(mImagePickerAdapter);
+        gridView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                if (mImagePickerAdapter.getNumColumns() == 0) {
+                    int imageSize = getResources().getDimensionPixelSize(me.tom.image.picker.R.dimen.image_picker_image_size);
+                    int imageSpace = getResources().getDimensionPixelOffset(me.tom.image.picker.R.dimen.image_picker_image_space);
+                    int numColumns = (int) Math.floor(gridView.getWidth() / (imageSize + imageSpace));
+                    if (numColumns > 0) {
+                        int columnWidth = (gridView.getWidth() / numColumns) - imageSpace;
+                        mImagePickerAdapter.setNumColumns(numColumns);
+                        mImagePickerAdapter.setItemSize(columnWidth);
+                    }
+                }
+                gridView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+            }
+        });
     }
 
     @Override
@@ -48,6 +69,6 @@ public class MainActivity extends AppCompatActivity {
                 images.add(image);
             }
         }
-        mImageGroupView.setImages(images);
+        mImagePickerAdapter.setImages(images);
     }
 }

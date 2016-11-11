@@ -40,6 +40,6 @@
             android:layout_height="@dimen/image_picker_list_view_item_chevron_size"
             android:layout_alignParentRight="true"
             android:layout_centerInParent="true"
-            android:src="@drawable/image_picker_chevron_right"/>
+            android:src="@drawable/chevron_right"/>
     </RelativeLayout>
 </LinearLayout>
