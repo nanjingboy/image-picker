@@ -133,6 +133,7 @@ public class ImagePickerActivity extends AppCompatActivity implements LoaderMana
         do {
             Image image = new Image();
             image.path = data.getString(pathColumnIndex);
+            image.checked = false;
             images.add(image);
         } while (data.moveToNext());
         mImagePickerAdapter.setImages(images);

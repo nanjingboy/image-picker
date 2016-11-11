@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
@@ -57,6 +58,16 @@ public class ImagePickerAdapter extends BaseAdapter {
         notifyDataSetChanged();
     }
 
+    public ArrayList<CharSequence> getSelectedImages() {
+        ArrayList<CharSequence> images = new ArrayList<>();
+        for (Image image : mImages) {
+            if (image.checked) {
+                images.add(image.path);
+            }
+        }
+        return images;
+    }
+
     public void setImages(ArrayList<Image> images) {
         mImages = images;
         notifyDataSetChanged();
@@ -79,24 +90,30 @@ public class ImagePickerAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+        ViewHolder holder;
         if (convertView == null) {
-            convertView = getView(parent);
+            holder = new ViewHolder();
+            convertView = mInflater.inflate(R.layout.image_picker_list_item, null, false);
+            holder.image = (ImageView) convertView.findViewById(R.id.image);
+            convertView.setTag(holder);
+        } else {
+            holder = (ViewHolder) convertView.getTag();
         }
-
         if (mItemSize > 0) {
-            ImageView imageView = (ImageView) convertView.findViewById(R.id.image);
             Glide.with(mContext).load(mImages.get(position).path)
                     .placeholder(R.drawable.loading)
                     .override(mItemSize, mItemSize)
-                    .into(imageView);
-            if (imageView.getLayoutParams().height != mItemSize) {
-                imageView.setLayoutParams(mItemLayoutParams);
+                    .into(holder.image);
+            if (holder.image.getLayoutParams().height != mItemSize) {
+                holder.image.setLayoutParams(mItemLayoutParams);
             }
         }
         return convertView;
     }
 
-    public View getView(ViewGroup parent) {
-       return mInflater.inflate(R.layout.image_picker_list_item, parent, false);
+    protected static class ViewHolder {
+        ImageView image;
+        CheckBox checkBox;
     }
+
 }
