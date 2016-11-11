@@ -1,3 +1,9 @@
+## 1.5.1 2016-11-11
+* Fix crash error while loading too many images
+
+## 1.5 2016-11-03
+* Fix multiple image picker errors
+
 ## 1.3.1 2016-11-02
 * Rename resource names
 
