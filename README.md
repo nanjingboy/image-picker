@@ -31,7 +31,7 @@ dependencies {
 <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 ```
 
-#Usage
+# Usage
 
 ```java
 import android.content.Intent;
@@ -55,5 +55,6 @@ protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 }
 ```
 
-#License
+# License
+
 MIT
