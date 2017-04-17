@@ -1,3 +1,6 @@
+## 2.0.0 2017-04-17
+* Rewrite with RecyclerView
+
 ## 1.5.1 2016-11-11
 * Fix crash error while loading too many images
 
