@@ -30,18 +30,8 @@
             android:textSize="@dimen/image_picker_header_view_right_text_size"
             android:text="@string/cancel" />
     </RelativeLayout>
-
-    <GridView
-        android:id="@+id/gridView"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/header"
-        android:layout_marginTop="@dimen/image_picker_image_space"
-        android:horizontalSpacing="@dimen/image_picker_image_space"
-        android:verticalSpacing="@dimen/image_picker_image_space"
-        android:paddingBottom="?android:attr/actionBarSize"
-        android:clipToPadding="false"
-        android:numColumns="auto_fit"
-        android:columnWidth="@dimen/image_picker_image_size"
-        android:listSelector="@null"/>
+        android:layout_height="match_parent"/>
 </merge>

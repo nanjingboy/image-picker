@@ -10,10 +10,10 @@ import android.widget.Toast;
 
 import com.jakewharton.rxbinding.view.RxView;
 
+import java.util.ArrayList;
 
 import me.tom.image.picker.R;
 import me.tom.image.picker.adapter.MultipleImagePickerAdapter;
-import me.tom.image.picker.model.Image;
 
 public class MultipleImagePickerActivity extends ImagePickerActivity {
 
@@ -22,19 +22,27 @@ public class MultipleImagePickerActivity extends ImagePickerActivity {
     @Override
     protected void initialize() {
         super.initialize();
-
-        mGridView.setOnItemClickListener((parent, view, position, id) -> {
-            Image image = (Image) mImagePickerAdapter.getItem(position);
-            image.checked = !image.checked;
-            mImagePickerAdapter.notifyDataSetChanged();
-            mChosenCountView.setText(mImagePickerAdapter.getSelectedImages().size() + "/" + mImagePickerAdapter.getCount());
+        mImagePickerAdapter.setOnItemClickListener(view -> {
+            Integer position = mRecyclerView.getChildAdapterPosition(view);
+            MultipleImagePickerAdapter adapter = (MultipleImagePickerAdapter) mImagePickerAdapter;
+            if (adapter.selectedPositions.contains(position)) {
+                adapter.selectedPositions.remove(position);
+            } else {
+                adapter.selectedPositions.add(position);
+            }
+            adapter.notifyItemChanged(position);
+            mChosenCountView.setText(adapter.selectedPositions.size() + "/" + adapter.getItemCount());
         });
-
         mChosenCountView = (TextView) findViewById(R.id.chosenCount);
         RxView.clicks(findViewById(R.id.choose)).subscribe(aVoid -> {
-            if (mImagePickerAdapter.getSelectedImages().size() > 0) {
+            MultipleImagePickerAdapter adapter = (MultipleImagePickerAdapter) mImagePickerAdapter;
+            if (adapter.selectedPositions.size() > 0) {
+                ArrayList<CharSequence> images = new ArrayList<>();
+                for (Integer position: adapter.selectedPositions) {
+                    images.add(adapter.getItem(position).path);
+                }
                 Intent intent = new Intent();
-                intent.putCharSequenceArrayListExtra("images", mImagePickerAdapter.getSelectedImages());
+                intent.putCharSequenceArrayListExtra("images", images);
                 setResult(Activity.RESULT_OK, intent);
                 finish();
             } else {
@@ -52,12 +60,12 @@ public class MultipleImagePickerActivity extends ImagePickerActivity {
 
     @Override
     protected void setImagePickerAdapter() {
-        mImagePickerAdapter = new MultipleImagePickerAdapter(this);
+        mImagePickerAdapter = new MultipleImagePickerAdapter(this, mImageSize);
     }
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
         super.onLoadFinished(loader, data);
-        mChosenCountView.setText("0/" + mImagePickerAdapter.getCount());
+        mChosenCountView.setText("0/" + mImagePickerAdapter.getItemCount());
     }
 }

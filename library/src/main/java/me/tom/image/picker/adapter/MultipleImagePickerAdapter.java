@@ -3,41 +3,48 @@ package me.tom.image.picker.adapter;
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
 import android.widget.ImageView;
-import com.bumptech.glide.Glide;
+
+import java.util.ArrayList;
+
 import me.tom.image.picker.R;
 
 public class MultipleImagePickerAdapter extends ImagePickerAdapter {
 
-    public MultipleImagePickerAdapter(Context context) {
-        super(context);
+    public ArrayList<Integer> selectedPositions = new ArrayList<>();
+
+    public MultipleImagePickerAdapter(Context context, int imageSize) {
+        super(context, imageSize);
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        ViewHolder holder;
-        if (convertView == null) {
-            holder = new ViewHolder();
-            convertView = mInflater.inflate(R.layout.multiple_image_picker_list_item, null, false);
-            holder.image = (ImageView) convertView.findViewById(R.id.image);
-            holder.checkBox = (CheckBox) convertView.findViewById(R.id.check);
-            convertView.setTag(holder);
-        } else {
-            holder = (ViewHolder) convertView.getTag();
-        }
-        if (mItemSize > 0) {
-            Glide.with(mContext).load(mImages.get(position).path)
-                    .placeholder(R.drawable.loading)
-                    .override(mItemSize, mItemSize)
-                    .into(holder.image);
-            if (holder.image.getLayoutParams().height != mItemSize) {
-                holder.image.setLayoutParams(mItemLayoutParams);
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        ViewHolder holder = new ViewHolder(mInflater.inflate(R.layout.multiple_image_picker_list_item, parent, false));
+        holder.itemView.setOnClickListener(view -> {
+            if (mItemClickListener != null) {
+                mItemClickListener.onItemClick(view);
             }
-            holder.checkBox.setChecked(mImages.get(position).checked);
-        }
-        return convertView;
+        });
+        return holder;
     }
 
+    @Override
+    public void onBindViewHolder(ImagePickerAdapter.ViewHolder holder, int position) {
+        super.onBindViewHolder(holder, position);
+        if (selectedPositions.contains(position)) {
+            ((ViewHolder) holder).selectView.setImageResource(R.drawable.image_picker_selected);
+        } else {
+            ((ViewHolder) holder).selectView.setImageResource(R.drawable.image_picker_unselected);
+        }
+    }
 
+    public static class ViewHolder extends ImagePickerAdapter.ViewHolder {
+
+        public ImageView selectView;
+
+        public ViewHolder(View view) {
+            super(view);
+            selectView = (ImageView) view.findViewById(R.id.selectView);
+        }
+    }
 }

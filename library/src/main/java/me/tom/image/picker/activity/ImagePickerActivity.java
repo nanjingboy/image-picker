@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Point;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
@@ -11,8 +12,9 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
-import android.view.ViewTreeObserver;
-import android.widget.GridView;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.view.Display;
 import android.widget.TextView;
 
 import com.jakewharton.rxbinding.view.RxView;
@@ -22,20 +24,30 @@ import java.util.ArrayList;
 
 import me.tom.image.picker.R;
 import me.tom.image.picker.adapter.ImagePickerAdapter;
+import me.tom.image.picker.common.widgets.GridSpacingItemDecoration;
 import me.tom.image.picker.model.Image;
 
 public class ImagePickerActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
 
     protected String mFolderName;
     protected ImagePickerAdapter mImagePickerAdapter;
-    protected GridView mGridView;
+    protected RecyclerView mRecyclerView;
+
+    protected int mImageSize;
+    protected int mImageSpace;
+    protected int mColumnCount;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        RxPermissions.getInstance(this)
-                .request(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+        mImageSize = getResources().getDimensionPixelSize(R.dimen.image_picker_image_size);
+        mImageSpace = getResources().getDimensionPixelOffset(R.dimen.image_picker_image_space);
+        Display display = getWindowManager().getDefaultDisplay();
+        Point size = new Point();
+        display.getSize(size);
+        mColumnCount = (int) Math.floor((size.x - mImageSpace) / (mImageSize + mImageSpace));
+        RxPermissions rxPermissions = new RxPermissions(this);
+        rxPermissions.request(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 .subscribe(granted -> {
                     if (granted) {
                         initialize();
@@ -54,29 +66,15 @@ public class ImagePickerActivity extends AppCompatActivity implements LoaderMana
         mFolderName = getIntent().getStringExtra("folderName");
         TextView name = (TextView) findViewById(R.id.name);
         name.setText(mFolderName);
-
         setImagePickerAdapter();
-
-        mGridView = (GridView) findViewById(R.id.gridView);
-        mGridView.setAdapter(mImagePickerAdapter);
-        mGridView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-            @Override
-            public void onGlobalLayout() {
-                if (mImagePickerAdapter.getNumColumns() == 0) {
-                    int imageSize = getResources().getDimensionPixelSize(R.dimen.image_picker_image_size);
-                    int imageSpace = getResources().getDimensionPixelOffset(R.dimen.image_picker_image_space);
-                    int numColumns = (int) Math.floor(mGridView.getWidth() / (imageSize + imageSpace));
-                    if (numColumns > 0) {
-                        int columnWidth = (mGridView.getWidth() / numColumns) - imageSpace;
-                        mImagePickerAdapter.setNumColumns(numColumns);
-                        mImagePickerAdapter.setItemSize(columnWidth);
-                    }
-                }
-                mGridView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-            }
-        });
-        mGridView.setOnItemClickListener((parent, view, position, id) -> {
-            Image image = (Image) mImagePickerAdapter.getItem(position);
+        mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+        mRecyclerView.setAdapter(mImagePickerAdapter);
+        mRecyclerView.setLayoutManager(new GridLayoutManager(this, mColumnCount));
+        int spacingInPixels = getResources().getDimensionPixelSize(R.dimen.image_picker_image_space);
+        mRecyclerView.addItemDecoration(new GridSpacingItemDecoration(mColumnCount, spacingInPixels, true, 0));
+        mImagePickerAdapter.setOnItemClickListener(view -> {
+            int position = mRecyclerView.getChildAdapterPosition(view);
+            Image image = mImagePickerAdapter.getItem(position);
             ArrayList<CharSequence> images = new ArrayList<>();
             images.add(image.path);
             Intent intent = new Intent();
@@ -84,7 +82,6 @@ public class ImagePickerActivity extends AppCompatActivity implements LoaderMana
             setResult(Activity.RESULT_OK, intent);
             finish();
         });
-
         getSupportLoaderManager().restartLoader(0, null, this);
     }
 
@@ -93,7 +90,7 @@ public class ImagePickerActivity extends AppCompatActivity implements LoaderMana
     }
 
     protected void setImagePickerAdapter() {
-        mImagePickerAdapter = new ImagePickerAdapter(this);
+        mImagePickerAdapter = new ImagePickerAdapter(this, mImageSize);
     }
 
     @Override
@@ -133,7 +130,6 @@ public class ImagePickerActivity extends AppCompatActivity implements LoaderMana
         do {
             Image image = new Image();
             image.path = data.getString(pathColumnIndex);
-            image.checked = false;
             images.add(image);
         } while (data.moveToNext());
         mImagePickerAdapter.setImages(images);

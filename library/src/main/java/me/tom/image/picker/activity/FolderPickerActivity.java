@@ -33,7 +33,8 @@ public class FolderPickerActivity extends AppCompatActivity implements LoaderMan
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        RxPermissions.getInstance(this)
+        RxPermissions rxPermissions = new RxPermissions(this);
+        rxPermissions
                 .request(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 .subscribe(granted -> {
                     if (granted) {

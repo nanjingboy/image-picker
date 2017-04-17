@@ -5,8 +5,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.view.ViewTreeObserver;
-import android.widget.GridView;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.widget.RadioButton;
 
 import com.jakewharton.rxbinding.view.RxView;
@@ -15,6 +15,7 @@ import java.util.ArrayList;
 
 import me.tom.image.picker.activity.FolderPickerActivity;
 import me.tom.image.picker.adapter.ImagePickerAdapter;
+import me.tom.image.picker.common.widgets.GridSpacingItemDecoration;
 import me.tom.image.picker.model.Image;
 import rx.functions.Action1;
 
@@ -38,24 +39,11 @@ public class MainActivity extends AppCompatActivity {
         });
 
         mImagePickerAdapter = new ImagePickerAdapter(this);
-        final GridView gridView = (GridView) findViewById(R.id.gridView);
-        gridView.setAdapter(mImagePickerAdapter);
-        gridView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-            @Override
-            public void onGlobalLayout() {
-                if (mImagePickerAdapter.getNumColumns() == 0) {
-                    int imageSize = getResources().getDimensionPixelSize(me.tom.image.picker.R.dimen.image_picker_image_size);
-                    int imageSpace = getResources().getDimensionPixelOffset(me.tom.image.picker.R.dimen.image_picker_image_space);
-                    int numColumns = (int) Math.floor(gridView.getWidth() / (imageSize + imageSpace));
-                    if (numColumns > 0) {
-                        int columnWidth = (gridView.getWidth() / numColumns) - imageSpace;
-                        mImagePickerAdapter.setNumColumns(numColumns);
-                        mImagePickerAdapter.setItemSize(columnWidth);
-                    }
-                }
-                gridView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-            }
-        });
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+        recyclerView.setAdapter(mImagePickerAdapter);
+        recyclerView.setLayoutManager(new GridLayoutManager(this, 3));
+        int spacingInPixels = getResources().getDimensionPixelSize(me.tom.image.picker.R.dimen.image_picker_image_space);
+        recyclerView.addItemDecoration(new GridSpacingItemDecoration(3, spacingInPixels, true, 0));
     }
 
     @Override

@@ -3,9 +3,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/white">
-
-    <include layout="@layout/image_picker"/>
-
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="@dimen/image_picker_multi_selected_panel_height"
+        android:layout_alignParentTop="true">
+        <include layout="@layout/image_picker"/>
+    </LinearLayout>
     <RelativeLayout
         android:id="@+id/multiPanel"
         android:layout_width="match_parent"

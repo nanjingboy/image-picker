@@ -1,13 +1,12 @@
 package me.tom.image.picker.adapter;
 
 import android.content.Context;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 
 import com.bumptech.glide.Glide;
 
@@ -16,104 +15,75 @@ import java.util.ArrayList;
 import me.tom.image.picker.R;
 import me.tom.image.picker.model.Image;
 
-public class ImagePickerAdapter extends BaseAdapter {
+public class ImagePickerAdapter extends RecyclerView.Adapter<ImagePickerAdapter.ViewHolder> {
 
     protected Context mContext;
     protected LayoutInflater mInflater;
     protected ArrayList<Image> mImages;
+    protected int mImageSize;
 
-    protected int mItemSize = 0;
-    protected int mNumColumns = 0;
-
-    protected RelativeLayout.LayoutParams mItemLayoutParams;
+    protected IItemClickListener mItemClickListener;
 
     public ImagePickerAdapter(Context context) {
+        this(context, context.getResources().getDimensionPixelSize(R.dimen.image_picker_image_size));
+    }
+
+    public ImagePickerAdapter(Context context, int imageSize) {
         mContext = context;
-        mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         mImages = new ArrayList<>();
-        mItemLayoutParams = new RelativeLayout.LayoutParams(
-                RelativeLayout.LayoutParams.MATCH_PARENT,
-                RelativeLayout.LayoutParams.MATCH_PARENT
-        );
+        mImageSize = imageSize;
+        mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
-    public void setNumColumns(int numColumns) {
-        mNumColumns = numColumns;
+    public Image getItem(int position) {
+        return mImages.get(position);
     }
 
-    public int getNumColumns() {
-        return mNumColumns;
+    @Override
+    public int getItemCount() {
+        return mImages.size();
     }
 
-    public void setItemSize(int itemSize) {
-        if (itemSize == mItemSize) {
-            return;
-        }
-
-        mItemSize = itemSize;
-        mItemLayoutParams = new RelativeLayout.LayoutParams(
-                RelativeLayout.LayoutParams.MATCH_PARENT,
-                mItemSize
-        );
-        notifyDataSetChanged();
-    }
-
-    public ArrayList<CharSequence> getSelectedImages() {
-        ArrayList<CharSequence> images = new ArrayList<>();
-        for (Image image : mImages) {
-            if (image.checked) {
-                images.add(image.path);
+    @Override
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        ViewHolder holder = new ViewHolder(mInflater.inflate(R.layout.image_picker_list_item, parent, false));
+        holder.itemView.setOnClickListener(view -> {
+            if (mItemClickListener != null) {
+                mItemClickListener.onItemClick(view);
             }
-        }
-        return images;
+        });
+        return holder;
     }
+
+    @Override
+    public void onBindViewHolder(ViewHolder holder, int position) {
+        Glide.with(mContext).load(mImages.get(position).path)
+                .placeholder(R.drawable.loading)
+                .override(mImageSize, mImageSize)
+                .into(holder.imageView);
+    }
+
 
     public void setImages(ArrayList<Image> images) {
         mImages = images;
         notifyDataSetChanged();
     }
 
-    @Override
-    public int getCount() {
-        return mImages.size();
+    public void setOnItemClickListener(IItemClickListener listener) {
+        mItemClickListener = listener;
     }
 
-    @Override
-    public Object getItem(int position) {
-        return mImages.get(position);
+    public interface IItemClickListener {
+        void onItemClick(View view);
     }
 
-    @Override
-    public long getItemId(int position) {
-        return position;
-    }
+    public static class ViewHolder extends RecyclerView.ViewHolder {
 
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        ViewHolder holder;
-        if (convertView == null) {
-            holder = new ViewHolder();
-            convertView = mInflater.inflate(R.layout.image_picker_list_item, null, false);
-            holder.image = (ImageView) convertView.findViewById(R.id.image);
-            convertView.setTag(holder);
-        } else {
-            holder = (ViewHolder) convertView.getTag();
+        public ImageView imageView;
+
+        public ViewHolder(View view) {
+            super(view);
+            imageView = (ImageView) view.findViewById(R.id.imageView);
         }
-        if (mItemSize > 0) {
-            Glide.with(mContext).load(mImages.get(position).path)
-                    .placeholder(R.drawable.loading)
-                    .override(mItemSize, mItemSize)
-                    .into(holder.image);
-            if (holder.image.getLayoutParams().height != mItemSize) {
-                holder.image.setLayoutParams(mItemLayoutParams);
-            }
-        }
-        return convertView;
     }
-
-    protected static class ViewHolder {
-        ImageView image;
-        CheckBox checkBox;
-    }
-
 }

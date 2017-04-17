@@ -2,4 +2,5 @@
 <resources>
     <color name="colorPrimary">#02C05C</color>
     <color name="colorBorder">#e6e6e6</color>
+    <color name="colorSelectedListItem">#c6f5e2</color>
 </resources>
